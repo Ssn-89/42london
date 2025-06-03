@@ -1,0 +1,4 @@
+for f in $(ls -t); do
+	[ -d "&f" ] && printf "%s/, " "$f" || printf "%s, " "$f"
+done | sed 's/, $//'
+
