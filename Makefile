@@ -22,14 +22,13 @@ CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
+all : $(NAME)
+
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
-all : 
-	$(NAME)
-
-# .c.o :
-# 	$(CC) $(CFLAGS) -c -o $@ $<
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	$(RM) $(OBJS) $(NAME)
@@ -37,10 +36,11 @@ clean :
 fclean : clean
 	$(RM) $(NAME)
 
-re : fclean 
-	$(NAME)
+re : fclean all
 
-so:
-	$(CC) -fPIC $(CFLAGS) -c $(SRCS)
-	$(CC) -shared -o libft.so $(OBJS)
+.PHONY: all clean fclean re
+
+# so:
+# 	$(CC) -fPIC $(CFLAGS) -c $(SRCS)
+# 	$(CC) -shared -o libft.so $(OBJS)
 

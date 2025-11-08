@@ -6,7 +6,7 @@
 /*   By: sunson <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 16:07:26 by sunson            #+#    #+#             */
-/*   Updated: 2025/11/06 19:34:27 by sunson           ###   ########.fr       */
+/*   Updated: 2025/11/07 19:41:31 by sunson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	ft_getstartidx(char const *s1, char const *s2)
 		j = 0;
 		while (s2[j])
 		{
-			if(s1[i] == s2[j])
-				break;
+			if (s1[i] == s2[j])
+				break ;
 			j++;
 		}
 		if (!s2[j])
@@ -34,36 +34,37 @@ int	ft_getstartidx(char const *s1, char const *s2)
 	return (i);
 }
 
-int ft_getendidx(char const *s1, char const *s2)
+int	ft_getendidx(char const *s1, char const *s2)
 {
 	int	i;
 	int	j;
-	int len;
+	int	len;
 
-	len = ft_strlen(s1);	
+	len = ft_strlen(s1);
 	i = len - 1;
-	while (1 >= 0)
+	while (i >= 0)
 	{
 		j = 0;
-		while (s2[i] != '\0')
+		while (s2[j] != '\0')
 		{
 			if (s1[i] == s2[j])
-				break;
+				break ;
 			j++;
 		}
 		if (!s2[j])
 			return (i);
 		i--;
 	}
-	return -1;
+	return (-1);
 }
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char *src;
-	int	startidx;
-	int endidx;
-	int len;
-	int	i;
+	char	*src;
+	int		startidx;
+	int		endidx;
+	int		len;
+	int		i;
 
 	if (!s1 || !set)
 		return (NULL);

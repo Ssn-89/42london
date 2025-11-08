@@ -27,17 +27,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	src = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!src)
 		return (NULL);
-	while (i < len1)
-	{
+	i = -1;
+	while (++i < len1)
 		src[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < len2)
-	{
+	i = -1;
+	while (++i < len2)
 		src[i + len1] = s2[i];
-		i++;
-	}
-	src[i + len1] = '\0';
+	src[len1 + len2] = '\0';
 	return (src);
 }

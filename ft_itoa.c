@@ -12,10 +12,46 @@
 
 #include "libft.h"
 
+int	ft_numlen(int n)
+{
+	long	num;
+	int		len;
+
+	len = 0;
+	num = n;
+	if (num <= 0)
+		len++;
+	while (num)
+	{
+		num /= 10;
+		len++;
+	}
+	return (len);
+}
+
 char	*ft_itoa(int n)
 {
 	char	*src;
+	long	num;
+	int		len;
 
-	src = (char*)malloc(sizeof(char) * n);
-	return src;
+	num = n;
+	len = ft_numlen(n);
+	src = (char *)malloc(sizeof(char) * (len + 1));
+	if (!src)
+		return (NULL);
+	src[len] = '\0';
+	if (num == 0)
+		return (src[0] = '0', src);
+	if (num < 0)
+	{
+		src[0] = '-';
+		num = -num;
+	}
+	while (num)
+	{
+		src[--len] = (num % 10) + '0';
+		num /= 10;
+	}
+	return (src);
 }

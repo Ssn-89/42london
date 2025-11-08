@@ -12,67 +12,101 @@
 
 #include "libft.h"
 
-int ft_getcnt(char *s, char c)
+static void	free_all(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(*s)
-	{
-		if(*s == c)
-		{
-			i++;
-		}
-		s++;
-	}
-	return (i);
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }
-int ft_getidx(char *s, char c)
-{
-	int i;
 
-	i = 0;
-	while(s[i] != '\0')
+int	word_cnt(char const *str, char c)
+{
+	int	cnt;
+
+	cnt = 0;
+	while (*str)
 	{
-		if(s[i] == c)
+		if (*str == c)
+			str++;
+		else
 		{
-			return i;
+			cnt++;
+			while (*str != c && *str)
+				str++;
 		}
-		i++;
 	}
-	return -1;
+	return (cnt);
 }
-//nono........ split can make multiple char arrays.... not just two
+
+int	addword(char const *str, char c, char **result, int i)
+{
+	const char	*start;
+	int			len;
+
+	while (*str)
+	{
+		while (*str == c)
+			str++;
+		if (*str)
+		{
+			start = str;
+			while (*str != c && *str)
+				str++;
+			len = str - start;
+			result[i] = malloc(len + 1);
+			if (!result[i])
+			{
+				free_all(result);
+				return (-1);
+			}
+			ft_strlcpy((char *)result[i++], start, len + 1);
+		}
+	}
+	result[i] = 0;
+	return (1);
+}
 
 char	**ft_split(char const *s, char c)
 {
-	char **src;
-	char *s1;
-	char *s2;
-	int idx;
-	int i;
-	int slen;
-	char *tmp;
+	char	**src;
 
-	tmp = (char *)s;
-	i = 0;
-	slen = ft_strlen(tmp);
-	idx = ft_getidx(tmp, c);
-	s1 = (char *)malloc(sizeof(char) * (idx + 1));
-	s2 = (char *)malloc(sizeof(char) * (slen - idx));
-	src = (char **)malloc(sizeof(char *) * ft_getcnt(tmp, c));
-	if(idx < 0)
-		return 0;
-	while(i < idx)
+	if (!s)
+		return (NULL);
+	src = (char **)malloc((word_cnt(s, c) + 1) * sizeof(char *));
+	if (!src)
+		return (NULL);
+	if ((addword(s, c, src, 0)) == -1)
 	{
-		s1[i] = tmp[i];
-		i++;
+		return (NULL);
 	}
-	i = 0;
-	while(i < slen - idx)
-	{
-		s2[i] = tmp[slen - idx + 1];
-		i++;
-	}
-	return src;
+	return (src);
 }
+// char	**src;
+	// int		i;
+	// int		words;
+	// int		len;
+
+	// words = ft_getcnt((char *)s, c);
+	// src = malloc(sizeof(char *) * (words + 1));
+	// if (!src)
+	// 	return (NULL);
+	// i = 0;
+	// while (*s)
+	// {
+	// 	while (*s == c)
+	// 		s++;
+	// 	if (*s)
+	// 	{
+	// 		len = ft_getwordlen((char *)s, c);
+	// 		src[i] = malloc(len + 1);
+	// 		if (!src[i])
+	// 			return (free_all(src, i));
+	// 		ft_strlcpy(src[i++], s, len + 1);
+	// 		s += len;
+	// 	}
+	// }
+	// src[i] = NULL;
+	// return (src);

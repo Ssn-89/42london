@@ -12,13 +12,32 @@
 
 #include "libft.h"
 
+int	ft_isblank(int c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
+
 int	ft_atoi(const char *src)
 {
 	int	i;
-	while (*src)
-	{
-		src++;
-	}
+	int	minus;
+	int	answer;
+
 	i = 0;
-	return (i);
+	minus = 1;
+	answer = 0;
+	while (ft_isblank(src[i]))
+		i++;
+	if (src[i] == '-' || src[i] == '+')
+	{
+		if (src[i] == '-')
+			minus *= -1;
+		i++;
+	}
+	while (ft_isdigit(src[i]))
+	{
+		answer = answer * 10 + (src[i] - '0');
+		i++;
+	}
+	return (minus * answer);
 }
